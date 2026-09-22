@@ -2,7 +2,7 @@
 
 ## Prioridade 1 — Fluxo principal do MVP
 
-1. Cadastrar e autenticar o usuário junto com sua organização.
+1. Cadastrar usuário e organização, confirmar o e-mail, autenticar, recuperar senha e encerrar sessão.
 2. Cadastrar um estabelecimento e conectá-lo ao iFood.
 3. Capturar avaliações sem duplicidade.
 4. Classificar prioridade pela nota.
@@ -19,7 +19,7 @@
 
 ## Antes da implementação
 
-- Definir o mecanismo de cadastro, autenticação e recuperação de acesso.
+- Escolher provedor de autenticação e definir política de senha e duração da sessão.
 - Validar credenciamento, autenticação, estados e restrições da API do iFood.
 - Definir provedores de e-mail e IA.
 - Definir a arquitetura técnica e registrar suas decisões.

@@ -91,3 +91,9 @@ O MVP terá cadastro e autenticação simples, um usuário por organização e n
 **Status:** Aceita como diretriz
 
 `Organization` será o limite de isolamento dos dados desde o início. Recursos comerciais futuros, como múltiplos usuários, convites, papéis, planos e cobrança, serão avaliados se o produto for vendido. Eles não fazem parte do MVP.
+
+## DEC-016 — Autenticação do MVP
+
+**Status:** Aceita
+
+O cadastro cria o usuário e a organização na mesma jornada. O acesso usa e-mail e senha, requer confirmação do e-mail, permite recuperação da senha e mantém uma sessão persistente com opção de sair. Provedor, política de senha e duração da sessão serão decisões técnicas posteriores.

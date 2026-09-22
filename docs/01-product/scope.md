@@ -5,8 +5,10 @@
 - Usar o iFood como primeiro canal de integração.
 - Capturar avaliações diretamente associadas aos estabelecimentos conectados.
 - Organizar as interações por organização, unidade e integração.
-- Oferecer cadastro e autenticação simples para um usuário por organização.
-- Dar ao usuário acesso às unidades e interações da própria organização, sem perfis ou níveis de permissão.
+- Cadastrar usuário e organização na mesma jornada.
+- Autenticar com e-mail e senha, confirmar o endereço de e-mail e permitir recuperação de senha.
+- Manter a sessão do usuário entre acessos e oferecer a ação de sair.
+- Oferecer um usuário por organização, com acesso às unidades e interações da própria organização, sem perfis ou níveis de permissão.
 - Usar a nota da avaliação como sinal principal de prioridade: 1–2 alta, 3 média e 4–5 baixa.
 - Inferir do comentário uma satisfação separada da prioridade: muito insatisfeito, insatisfeito, neutro, satisfeito, muito satisfeito ou indeterminado.
 - Enviar e-mail ao usuário responsável por cada nova avaliação quando as notificações do estabelecimento estiverem ativas.
@@ -28,7 +30,7 @@
 
 ## Ainda não decidido
 
-- Mecanismo e provedor técnico de autenticação.
+- Provedor técnico de autenticação, política de senha e duração das sessões.
 - Método técnico usado para inferir satisfação e confiança.
 - Provedor de e-mail e regras de entregabilidade.
 - Provedor e limites da geração de respostas por IA.
