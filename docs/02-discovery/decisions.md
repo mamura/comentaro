@@ -58,12 +58,24 @@ Quando uma etapa falhar, o Comentaro deve exibir o estado da interação, permit
 
 ## DEC-010 — Configuração de notificações
 
-**Status:** Aceita parcialmente
+**Status:** Aceita
 
-No MVP, a notificação é configurada por estabelecimento com dois estados: ativa ou silenciada. Quando ativa, novas avaliações geram notificação para o responsável. Quando silenciada, as avaliações continuam sendo capturadas e exibidas, mas não geram aviso externo. O canal de entrega e o estado inicial ainda serão definidos.
+No MVP, a notificação é configurada por estabelecimento como ativa ou silenciada. Ela começa ativa depois da conexão com o iFood. Quando ativa, cada nova avaliação gera um e-mail para o responsável. Quando silenciada, as avaliações continuam sendo capturadas e exibidas, sem aviso externo. WhatsApp fica fora do MVP.
 
 ## DEC-011 — Sugestão de resposta por IA
 
 **Status:** Aceita
 
 O MVP deve incluir sugestão de resposta por IA, com prioridade de implementação inferior ao fluxo principal de captura, análise, notificação e resposta. A sugestão deve ser revisável e editável pelo responsável e nunca será publicada automaticamente.
+
+## DEC-012 — Estados independentes
+
+**Status:** Aceita
+
+Processamento, notificação, resposta e sugestão por IA possuem estados separados. Uma falha em uma dessas etapas não deve impedir operações independentes, como responder manualmente quando a análise ou a IA falhar.
+
+## DEC-013 — Recuperação sem duplicidade
+
+**Status:** Aceita
+
+Avaliações não podem ser cadastradas duas vezes. Antes de repetir um envio de resposta após resultado incerto, o sistema consulta o iFood para reconciliar o estado. Notificações só podem ser reenviadas manualmente depois de falha. Toda tentativa integra o histórico.

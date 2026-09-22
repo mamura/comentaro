@@ -2,9 +2,9 @@
 
 ## Regras aceitas
 
-### RN-001 — Origem da interação
+### RN-001 — Origem e unicidade
 
-No primeiro recorte, uma interação é uma avaliação do iFood vinculada a um estabelecimento conectado.
+No primeiro recorte, uma interação é uma avaliação do iFood vinculada a um estabelecimento conectado. A identificação fornecida pelo canal deve impedir que a mesma avaliação seja cadastrada duas vezes.
 
 ### RN-002 — Prioridade pela nota
 
@@ -26,35 +26,47 @@ O MVP não classifica casos críticos nem cria um fluxo especial para eles. Essa
 
 ### RN-005 — Configuração de notificação
 
-A notificação é configurada por estabelecimento como ativa ou silenciada.
+A notificação é configurada por estabelecimento como ativa ou silenciada e começa ativa depois da conexão com o iFood.
 
-- Ativa: cada nova avaliação capturada gera uma notificação para o responsável pelo estabelecimento.
-- Silenciada: a avaliação continua sendo capturada e exibida, sem envio de notificação externa.
+- Ativa: cada nova avaliação capturada gera um e-mail para o responsável pelo estabelecimento.
+- Silenciada: a avaliação continua sendo capturada e exibida, sem envio de e-mail.
 
-Alterar essa configuração afeta apenas avaliações capturadas depois da alteração. O canal de entrega e o estado inicial ainda precisam ser definidos.
+Alterar a configuração afeta somente avaliações capturadas depois da alteração.
 
-### RN-006 — Responsável pela resposta
+### RN-006 — Envio da notificação
+
+O estado `enviada` significa que o serviço de e-mail aceitou a mensagem. Esse estado não significa que o destinatário recebeu, abriu ou leu o e-mail.
+
+Uma notificação com falha pode ser reenviada manualmente. Uma notificação aceita pelo serviço de e-mail não deve ser reenviada pelo fluxo normal.
+
+### RN-007 — Responsável pela resposta
 
 O mesmo perfil responsável pelo estabelecimento prepara e envia a resposta.
 
-### RN-007 — Sugestão de resposta por IA
+### RN-008 — Sugestão de resposta por IA
 
 O sistema pode gerar uma sugestão de resposta, que deve permanecer editável. O responsável decide se a utiliza e confirma qualquer envio. O sistema não publica automaticamente uma sugestão.
 
-### RN-008 — Falha visível
+Uma falha na geração da sugestão não impede que o responsável escreva e envie uma resposta manual.
 
-Uma falha deve deixar visível o estado atual da interação e ser registrada no histórico com a etapa afetada e o resultado conhecido.
+### RN-009 — Falhas independentes
 
-### RN-009 — Nova tentativa segura
+Uma falha deve deixar visível o estado da etapa afetada e ser registrada no histórico. Falhar na análise de satisfação não impede a leitura ou a resposta manual. Falhar na notificação não altera o processamento nem o estado de resposta da interação.
 
-Quando uma operação puder ser repetida, a nova tentativa não deve duplicar a avaliação, a notificação ou a resposta. O resultado de cada tentativa deve integrar o histórico.
+### RN-010 — Nova tentativa segura
 
-### RN-010 — Restrição de resposta do iFood
+Quando uma operação puder ser repetida, a nova tentativa não deve duplicar avaliação, notificação ou resposta. Cada tentativa registra data, etapa, resultado conhecido e mensagem de erro disponível.
 
-Antes de oferecer ou executar o envio, o sistema deve verificar o estado atual da avaliação e validar o texto conforme as regras vigentes do iFood. Os limites externos devem ser confirmados novamente durante o desenho da integração.
+### RN-011 — Reconciliação antes de reenviar resposta
+
+Antes de repetir um envio cujo resultado seja incerto, o Comentaro deve consultar o estado atual no iFood. Se a resposta já estiver registrada no canal, a interação deve ser reconciliada como respondida sem um novo envio.
+
+### RN-012 — Restrição de resposta do iFood
+
+Antes de oferecer ou executar o envio, o sistema deve verificar o estado atual da avaliação e validar o texto conforme as regras vigentes do iFood. Se o canal não aceitar mais uma resposta, o estado de resposta passa a `indisponível`.
 
 ## Regras pendentes
 
-- Canal usado para entregar notificações e estado inicial da configuração.
-- Estados internos da interação e quais falhas aceitam nova tentativa.
-- Provedor, contexto, limites e comportamento de falha da sugestão por IA.
+- Estados e expiração da autorização da integração com o iFood.
+- Provedor de e-mail e tratamento de eventos posteriores à aceitação da mensagem.
+- Provedor, contexto e limites da sugestão por IA.
