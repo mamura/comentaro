@@ -1,12 +1,11 @@
 # Hipóteses e pendências
 
-| Tema | Hipótese ou pendência | Próxima validação |
+| Tema | Decisão ou pendência | Próxima validação |
 | --- | --- | --- |
-| Prioridade | A nota é suficiente como sinal principal, mas o mapeamento entre notas e níveis ainda está aberto. | Definir as faixas de prioridade. |
-| Satisfação | O texto pode indicar satisfação diferente da sugerida pela nota. | Definir escala, método e confiança mínima. |
-| Alertas | O responsável pelo estabelecimento deve ser notificado. | Definir canal, gatilho e prazo. |
-| Resposta | O responsável pelo estabelecimento prepara e envia a resposta. | Definir se haverá sugestão por IA e como será aprovada. |
+| Prioridade | 1–2 estrelas: alta; 3: média; 4–5: baixa. | Avaliar o resultado com dados reais. |
+| Satisfação | Escala de seis resultados e confiança baixa, média ou alta. | Escolher o método técnico e avaliar exemplos reais. |
+| Alertas | Configuração por estabelecimento: ativa ou silenciada; destinatário é o responsável. | Definir canal de entrega e estado inicial. |
+| Resposta | O responsável prepara, edita e envia a resposta. | Detalhar estados e validações do fluxo. |
+| IA | Sugestão editável faz parte do MVP com menor prioridade e sem publicação automática. | Definir provedor, contexto e limites. |
 | Criticidade | Ainda não existem exemplos reais suficientes para uma classificação confiável. | Reavaliar depois de coletar dados reais. |
 | Integração | A API do iFood atenderá à captura e à resposta no recorte planejado. | Validar credenciamento, autorização, estados e erros em ambiente apropriado. |
-
-Nenhuma linha desta tabela representa requisito fechado além das decisões explicitamente aceitas.
