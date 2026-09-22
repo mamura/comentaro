@@ -2,11 +2,11 @@
 
 | Tema | Hipótese ou pendência | Próxima validação |
 | --- | --- | --- |
-| Valor | Uma caixa de entrada unificada reduz perda de interações relevantes. | Entrevistar responsáveis por restaurantes. |
-| Integrações | Canais desejados oferecem acesso autorizado às interações e, talvez, à resposta. | Conferir documentação e requisitos de acesso de cada provedor. |
-| Análise | Classificação de assunto, sentimento ou prioridade pode ajudar a triagem. | Definir critérios e testar com exemplos reais. |
-| Alertas | Notificações oportunas ajudam o responsável a agir. | Definir canal, gatilho e expectativa de tempo. |
-| Resposta | Sugestões de resposta podem reduzir o trabalho sem perder controle humano. | Definir aprovação, edição e publicação. |
-| Criticidade | Alguns casos precisam de revisão humana obrigatória. | Definir o que constitui caso crítico. |
+| Prioridade | A nota é suficiente como sinal principal, mas o mapeamento entre notas e níveis ainda está aberto. | Definir as faixas de prioridade. |
+| Satisfação | O texto pode indicar satisfação diferente da sugerida pela nota. | Definir escala, método e confiança mínima. |
+| Alertas | O responsável pelo estabelecimento deve ser notificado. | Definir canal, gatilho e prazo. |
+| Resposta | O responsável pelo estabelecimento prepara e envia a resposta. | Definir se haverá sugestão por IA e como será aprovada. |
+| Criticidade | Ainda não existem exemplos reais suficientes para uma classificação confiável. | Reavaliar depois de coletar dados reais. |
+| Integração | A API do iFood atenderá à captura e à resposta no recorte planejado. | Validar credenciamento, autorização, estados e erros em ambiente apropriado. |
 
-Nenhuma linha desta tabela representa requisito fechado.
+Nenhuma linha desta tabela representa requisito fechado além das decisões explicitamente aceitas.

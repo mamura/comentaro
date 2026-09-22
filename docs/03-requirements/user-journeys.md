@@ -1,19 +1,29 @@
 # Jornadas iniciais
 
-As jornadas abaixo descrevem o fluxo desejado em nível conceitual. Detalhes de interface, regras e integrações permanecem pendentes.
-
 ## 1. Configurar o acompanhamento
 
-Um responsável identifica sua `Organization` e `Location`, conecta uma `Integration` autorizada e passa a acompanhar as interações capturadas. O número de unidades e integrações disponível no MVP ainda precisa ser definido.
+Um responsável identifica sua `Organization` e `Location`, conecta a integração do iFood e passa a acompanhar as avaliações associadas ao estabelecimento. O número de unidades e integrações disponível no MVP ainda precisa ser definido.
 
-## 2. Receber e priorizar uma interação
+## 2. Capturar e analisar uma avaliação
 
-Uma interação vinculada à integração é capturada e registrada. O Comentaro apresenta seu conteúdo e origem, apoia a análise e a priorização e, quando couber, notifica o responsável. Gatilhos, prazos e meios de notificação ainda precisam ser definidos.
+O Comentaro captura uma avaliação do estabelecimento conectado, evita duplicidade e registra conteúdo, nota, origem e horários relevantes. A nota alimenta a prioridade. O texto do comentário é analisado separadamente para inferir o nível de satisfação.
 
-## 3. Analisar e responder
+As faixas de prioridade e a escala de satisfação permanecem pendentes. O MVP não tenta identificar casos críticos enquanto não houver exemplos reais e critérios validados.
 
-O responsável abre a interação, examina contexto e histórico e prepara uma resposta. Pode haver sugestão por IA, condicionada a decisão posterior. Em casos críticos, uma pessoa revisa a resposta antes de qualquer publicação. O modo de envio depende das capacidades e regras do canal.
+## 3. Notificar o responsável
+
+Quando a regra de notificação for atendida, o Comentaro avisa o responsável pelo estabelecimento. O canal, o gatilho e o prazo do aviso ainda precisam ser definidos.
+
+## 4. Preparar e enviar a resposta
+
+O responsável abre a interação, examina conteúdo, nota, satisfação inferida, prioridade e histórico, prepara a resposta e solicita o envio ao iFood. A eventual geração de sugestão por IA permanece pendente.
+
+Antes do envio, o sistema deve verificar se a avaliação ainda aceita resposta e se o texto cumpre as regras do iFood. O resultado do envio deve atualizar o estado e o histórico da interação.
+
+## 5. Recuperar uma falha
+
+Se captura, análise, notificação ou envio falhar, o Comentaro mostra o estado da interação e registra a ocorrência. Quando a operação puder ser repetida, oferece uma nova tentativa segura, sem duplicar avaliações, notificações ou respostas.
 
 ## Fluxo resumido
 
-`captura → análise → priorização → notificação → revisão/resposta → histórico`
+`captura → análise → prioridade e satisfação → notificação → resposta → histórico`
