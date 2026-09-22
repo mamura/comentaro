@@ -5,12 +5,14 @@
 - Usar o iFood como primeiro canal de integração.
 - Capturar avaliações diretamente associadas aos estabelecimentos conectados.
 - Organizar as interações por organização, unidade e integração.
+- Oferecer cadastro e autenticação simples para um usuário por organização.
+- Dar ao usuário acesso às unidades e interações da própria organização, sem perfis ou níveis de permissão.
 - Usar a nota da avaliação como sinal principal de prioridade: 1–2 alta, 3 média e 4–5 baixa.
 - Inferir do comentário uma satisfação separada da prioridade: muito insatisfeito, insatisfeito, neutro, satisfeito, muito satisfeito ou indeterminado.
-- Enviar e-mail ao responsável por cada nova avaliação quando as notificações do estabelecimento estiverem ativas.
+- Enviar e-mail ao usuário responsável por cada nova avaliação quando as notificações do estabelecimento estiverem ativas.
 - Iniciar as notificações como ativas depois da conexão do estabelecimento ao iFood e permitir silenciá-las.
-- Permitir que o responsável prepare e envie a resposta.
-- Oferecer sugestão de resposta por IA como capacidade de menor prioridade do MVP, sempre editável pelo responsável.
+- Permitir que o usuário prepare e envie a resposta.
+- Oferecer sugestão de resposta por IA como capacidade de menor prioridade do MVP, sempre editável pelo usuário.
 - Exibir estados e falhas, permitir nova tentativa segura e manter o histórico do ocorrido.
 
 ## Fora do primeiro recorte
@@ -20,10 +22,14 @@
 - Identificação e tratamento especial de casos críticos sem exemplos reais e critérios validados.
 - Publicação automática de respostas geradas por IA.
 - Notificação por WhatsApp.
+- Convites, equipes, perfis, papéis ou permissões diferenciadas.
+- Usuário associado a mais de uma organização.
+- Administração global de clientes, planos e cobrança.
 
 ## Ainda não decidido
 
+- Mecanismo e provedor técnico de autenticação.
 - Método técnico usado para inferir satisfação e confiança.
 - Provedor de e-mail e regras de entregabilidade.
 - Provedor e limites da geração de respostas por IA.
-- Limites de organizações, unidades e usuários por conta no MVP.
+- Quantidade de unidades permitidas por organização no MVP.
