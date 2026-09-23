@@ -97,3 +97,27 @@ O MVP terá cadastro e autenticação simples, um usuário por organização e n
 **Status:** Aceita
 
 O cadastro cria o usuário e a organização na mesma jornada. O acesso usa e-mail e senha, requer confirmação do e-mail, permite recuperação da senha e mantém uma sessão persistente com opção de sair. Provedor, política de senha e duração da sessão serão decisões técnicas posteriores.
+
+## DEC-017 — Módulo de conexões
+
+**Status:** Aceita
+
+Integrações externas serão concentradas no módulo `Connections`. O módulo gerencia o ciclo de vida de `Integration`, contas externas, capacidades, saúde e sincronização. Cada provedor terá um conector próprio, como iFood, aiqfome ou Instagram, sem introduzir conceitos específicos do provedor no domínio central.
+
+## DEC-018 — Modelo de capacidades
+
+**Status:** Aceita
+
+Conectores declaram capacidades como descobrir contas externas, capturar interações, consultar detalhes, publicar resposta e verificar saúde. Um provedor não precisa implementar capacidades que sua API não oferece.
+
+## DEC-019 — Tipo da aplicação iFood
+
+**Status:** Aceita
+
+O Comentaro será integrado ao iFood como aplicação centralizada SaaS. Credenciais e tokens pertencem à aplicação Comentaro e ficam somente no servidor. A autorização de cada loja é representada separadamente pela associação entre a organização, a unidade e o `merchantId` autorizado.
+
+## DEC-020 — Autorização de loja iFood
+
+**Status:** Aceita
+
+No fluxo centralizado, o acesso é solicitado no Portal do Desenvolvedor do iFood por ID ou CNPJ e aprovado pelo responsável no Portal do Parceiro. Depois da aprovação, o Comentaro obtém novo token, confirma a permissão pela listagem de lojas e associa o `merchantId` à unidade correta.
