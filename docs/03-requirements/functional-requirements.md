@@ -33,4 +33,4 @@
 - **RF-031:** permitir revisar e editar a sugestão antes de qualquer envio.
 - **RF-032:** manter a resposta manual disponível quando análise, notificação ou geração por IA falhar.
 
-Critérios detalhados de aceite serão escritos antes da implementação de cada requisito.
+Os critérios detalhados estão em [acceptance-criteria.md](acceptance-criteria.md).

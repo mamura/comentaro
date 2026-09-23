@@ -32,6 +32,7 @@
 - Definir opções de frequência, margem de sobreposição e política de retentativa.
 - Definir provedores de e-mail e IA.
 - Definir a arquitetura técnica e registrar suas decisões.
-- Escrever critérios de aceite das primeiras histórias.
+
+As histórias e seus critérios de aceite estão documentados em [mvp-stories.md](mvp-stories.md) e [acceptance-criteria.md](../03-requirements/acceptance-criteria.md).
 
 O ordenamento expressa prioridade relativa, não compromisso de prazo.
