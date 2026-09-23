@@ -53,6 +53,27 @@ Para aplicação centralizada, o acesso à loja é solicitado no Portal do Desen
 
 A etapa depende de operação externa e não deve ser representada como OAuth concluído instantaneamente dentro da interface do Comentaro.
 
+## Sincronização
+
+A carga inicial consulta os 30 dias anteriores e persiste no máximo as 100 avaliações mais recentes. Como a Review API limita cada página a 50 itens, o conector percorre até duas páginas completas para atingir esse limite.
+
+Depois da ativação, cada integração agenda sincronizações com frequência configurável e padrão de uma hora. O conector deve aceitar repetição e sobreposição de consultas; a persistência garante idempotência por provedor, conta externa e ID da interação.
+
+O checkpoint representa somente progresso persistido. Ele não avança ao iniciar uma página ou antes da confirmação da transação correspondente.
+
+## Recuperação e observabilidade
+
+Direção recomendada para a futura arquitetura:
+
+- agendador cria um job durável por integração;
+- fila ou mecanismo equivalente distribui jobs e impede concorrência para a mesma integração;
+- banco relacional mantém integrações, interações, unicidade, checkpoints e tentativas;
+- falhas transitórias usam retentativa com espera crescente e variação aleatória;
+- falhas definitivas ou retentativas esgotadas ficam visíveis para ação;
+- logs estruturados, métricas e correlação por execução permitem diagnóstico.
+
+O mecanismo de fila e as tecnologias específicas continuam pendentes. Banco NoSQL não é necessário para esse fluxo no MVP. Banco vetorial não participa da garantia de sincronização e só deve ser considerado futuramente se existir um caso de busca semântica que o justifique.
+
 ## Segurança e isolamento
 
 - Nenhum token ou segredo chega ao navegador.
@@ -70,10 +91,12 @@ Verificado em 23 de setembro de 2026:
 - [Solicitar acesso a uma loja](https://developer.ifood.com.br/en-US/docs/getting-started/first-steps/request-access)
 - [Introdução à autenticação](https://developer.ifood.com.br/en-US/docs/food/guides/modules/authentication/intro)
 - [Merchant API](https://developer.ifood.com.br/pt-BR/docs/guides/modules/merchant/introducao/)
+- [Homologação da Review API V2](https://developer.ifood.com.br/pt-BR/docs/guides/modules/review/homologation)
 
 ## Pendente
 
-- Janela e frequência da sincronização de avaliações.
-- Estratégia de paginação e checkpoint da Review API.
-- Política de retentativa por classe de erro.
+- Opções de frequência e menor intervalo permitido.
+- Tamanho da margem de sobreposição do checkpoint.
+- Política exata de retentativa por classe de erro.
+- Tecnologia de fila ou mecanismo equivalente.
 - Procedimento operacional exato para transições que dependem do Portal do Desenvolvedor.

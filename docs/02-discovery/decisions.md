@@ -121,3 +121,21 @@ O Comentaro será integrado ao iFood como aplicação centralizada SaaS. Credenc
 **Status:** Aceita
 
 No fluxo centralizado, o acesso é solicitado no Portal do Desenvolvedor do iFood por ID ou CNPJ e aprovado pelo responsável no Portal do Parceiro. Depois da aprovação, o Comentaro obtém novo token, confirma a permissão pela listagem de lojas e associa o `merchantId` à unidade correta.
+
+## DEC-021 — Sincronização inicial
+
+**Status:** Aceita
+
+Ao ativar uma integração, o Comentaro importa avaliações dos 30 dias anteriores, limitadas às 100 mais recentes. Avaliações importadas nessa carga inicial não geram notificações. Uma importação histórica adicional poderá ser oferecida futuramente.
+
+## DEC-022 — Frequência de sincronização
+
+**Status:** Aceita
+
+A frequência é configurável por integração e começa em uma hora. As opções disponíveis e o menor intervalo permitido serão definidos com os limites operacionais e da API.
+
+## DEC-023 — Garantias de sincronização
+
+**Status:** Aceita como diretriz
+
+Falhas ou atrasos não podem criar duplicatas nem avançar o progresso além de dados persistidos. A sincronização deve retomar do último ponto confirmado, expor seu estado e manter histórico das tentativas. Fila, banco, retentativas e observabilidade serão definidos tecnicamente na arquitetura.

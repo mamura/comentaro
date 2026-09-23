@@ -13,8 +13,9 @@ O Comentaro precisa possuir aplicação de teste no Portal do Desenvolvedor iFoo
 5. A integração passa a `access_requested` e depois a `awaiting_approval`.
 6. O responsável pela loja aprova a solicitação no Portal do Parceiro iFood.
 7. O Comentaro renova o token da aplicação e consulta as lojas autorizadas.
-8. Quando o `merchantId` esperado aparece, o Comentaro confere a associação e ativa a integração.
-9. A integração `active` fica disponível para sincronização de avaliações.
+8. Quando o `merchantId` esperado aparece, o Comentaro confere a associação e inicia a ativação.
+9. O Comentaro importa até 100 avaliações mais recentes criadas nos 30 dias anteriores.
+10. A integração passa a `active` e inicia sincronizações periódicas, com frequência padrão de uma hora.
 
 A propagação da permissão pelo iFood pode não ser imediata. O sistema deve apresentar espera sem orientar o usuário a repetir cadastros.
 
@@ -25,8 +26,8 @@ A propagação da permissão pelo iFood pode não ser imediata. O sistema deve a
 | `draft` | Conexão iniciada, ainda sem solicitação externa confirmada. |
 | `access_requested` | Solicitação de acesso registrada pelo Comentaro. |
 | `awaiting_approval` | Aguardando aprovação no Portal do Parceiro. |
-| `activating` | Aprovação esperada; token e lista de lojas estão sendo reconciliados. |
-| `active` | Loja autorizada, associada à unidade e disponível para sincronização. |
+| `activating` | Loja autorizada e carga inicial em andamento. |
+| `active` | Loja autorizada, carga inicial concluída e sincronização periódica habilitada. |
 | `authorization_revoked` | A loja revogou ou perdeu a autorização no iFood. |
 | `connection_failed` | A ativação ou verificação falhou e requer diagnóstico ou nova tentativa. |
 | `disconnected` | Associação encerrada no Comentaro. |
@@ -39,7 +40,11 @@ A propagação da permissão pelo iFood pode não ser imediata. O sistema deve a
 - A desconexão interrompe novas sincronizações sem apagar as interações já importadas.
 - Revogação de uma loja não deve interromper conexões de outras lojas.
 - Ativação repetida deve reconciliar a associação existente, sem criar outra integração.
+- A carga inicial não envia notificações para avaliações históricas.
 
-## Pendência seguinte
+## Configuração de frequência
 
-Definir o período da sincronização inicial, a frequência das sincronizações posteriores e o cursor usado para evitar perda ou duplicidade de avaliações.
+- Cada integração possui sua própria frequência de sincronização.
+- O valor inicial é uma hora.
+- Alterar a frequência afeta as próximas execuções e não inicia automaticamente uma importação histórica.
+- As opções e o menor intervalo permitido serão definidos de acordo com capacidade operacional e limites do provedor.

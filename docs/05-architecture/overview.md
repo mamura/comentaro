@@ -12,6 +12,12 @@ O desenho futuro deve contemplar cadastro e autenticação, isolamento por organ
 
 O módulo `Connections` gerencia integrações e expõe capacidades independentes do provedor. Cada provedor possui um conector. Credenciais da aplicação e tokens permanecem no servidor; associações de contas externas pertencem às organizações e unidades autorizadas.
 
+## Diretriz de sincronização
+
+Sincronizações são trabalhos retomáveis e idempotentes por integração. O progresso só avança depois da persistência, e uma falha em uma loja não bloqueia outras. A solução deve oferecer agendamento, execução durável, retentativas controladas e observabilidade.
+
+Um banco relacional é suficiente como fonte de verdade do MVP. Fila ou mecanismo equivalente será avaliado no desenho técnico. Banco vetorial não faz parte desta responsabilidade.
+
 Consulte [integrations.md](integrations.md) para o desenho conceitual e as restrições verificadas do iFood.
 
 ## Decisões pendentes
@@ -19,7 +25,7 @@ Consulte [integrations.md](integrations.md) para o desenho conceitual e as restr
 - Stack, componentes, persistência e hospedagem.
 - Provedor e mecanismo de autenticação e recuperação de acesso.
 - Estratégia técnica de isolamento e testes contra acesso entre organizações.
-- Frequência, checkpoint e tratamento de falhas da sincronização de avaliações.
+- Tecnologia de jobs, fila e observabilidade e políticas exatas de retentativa.
 - Provedores de IA e e-mail.
 
 Decisões técnicas futuras devem ser justificadas e registradas em `adr/` antes de guiar a implementação.
