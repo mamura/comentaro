@@ -29,7 +29,7 @@
 ## Antes da implementação
 
 - Materializar a estrutura inicial `apps/api` e `apps/web` conforme o ADR-002.
-- Definir opções de frequência, margem de sobreposição e política de retentativa.
+- Definir opções de frequência e o menor intervalo permitido pela operação e pela API.
 - Definir provedores de e-mail e IA.
 - Definir hospedagem e observabilidade.
 

@@ -142,4 +142,6 @@ A frequência é configurável por integração e começa em uma hora. As opçõ
 
 **Status:** Aceita como diretriz
 
-Falhas ou atrasos não podem criar duplicatas nem avançar o progresso além de dados persistidos. A sincronização deve retomar do último ponto confirmado, expor seu estado e manter histórico das tentativas. Fila, banco, retentativas e observabilidade serão definidos tecnicamente na arquitetura.
+Falhas ou atrasos não podem criar duplicatas nem avançar o progresso além de dados persistidos. A sincronização retoma do último ponto confirmado com cinco minutos de sobreposição, expõe seu estado e mantém histórico das tentativas.
+
+A fila inicial usa PostgreSQL por meio do Laravel Queue. Jobs possuem responsabilidades separadas, uma integração não executa duas sincronizações simultâneas e efeitos externos são idempotentes. São permitidas até cinco tentativas, com execução imediata e esperas de 1 minuto, 5 minutos, 15 minutos e 1 hora. Erros permanentes exigem ação sem repetir indefinidamente.

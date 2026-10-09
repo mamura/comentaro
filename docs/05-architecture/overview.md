@@ -8,7 +8,7 @@ Cada módulo separa domínio, aplicação e adaptadores na medida necessária pa
 
 Módulos se comunicam por contratos públicos de aplicação ou eventos explícitos. Um módulo não acessa diretamente repositórios, tabelas internas ou adaptadores de outro.
 
-Consulte [modular-monolith.md](modular-monolith.md), [ADR-001](adr/001-modular-monolith.md), [ADR-002](adr/002-technology-stack-and-application-boundaries.md) e [ADR-003](adr/003-spa-authentication.md).
+Consulte [modular-monolith.md](modular-monolith.md), [ADR-001](adr/001-modular-monolith.md), [ADR-002](adr/002-technology-stack-and-application-boundaries.md), [ADR-003](adr/003-spa-authentication.md) e [ADR-004](adr/004-jobs-synchronization-and-recovery.md).
 
 ## Diretriz de isolamento
 
@@ -41,7 +41,7 @@ Consulte [integrations.md](integrations.md) para o desenho conceitual e as restr
 - Provedor de hospedagem e topologia de produção.
 - Provedor de e-mail para confirmação e recuperação de acesso.
 - Implementação dos controles e testes contra acesso entre organizações.
-- Observabilidade e políticas exatas de retentativa.
-- Provedores de IA e e-mail.
+- Plataforma externa de monitoramento e alertas operacionais.
+- Provedor de IA.
 
 Decisões técnicas futuras devem ser justificadas e registradas em `adr/` antes de guiar a implementação.

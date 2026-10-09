@@ -63,16 +63,16 @@ O checkpoint representa somente progresso persistido. Ele não avança ao inicia
 
 ## Recuperação e observabilidade
 
-Direção recomendada para a futura arquitetura:
+- Laravel Scheduler verifica a cada minuto as integrações prontas para sincronização.
+- Laravel Queue com PostgreSQL mantém os jobs duráveis no MVP.
+- Um bloqueio com expiração impede duas sincronizações simultâneas da mesma integração.
+- A consulta sobrepõe cinco minutos antes do último checkpoint confirmado.
+- Jobs usam até cinco tentativas: imediata, depois de 1 minuto, 5 minutos, 15 minutos e 1 hora.
+- Erros permanentes interrompem as retentativas e produzem o estado `requires_action`.
+- Histórico persistente e logs estruturados usam um identificador de correlação e omitem segredos e conteúdo sensível desnecessário.
+- Redis e Horizon serão avaliados somente quando o volume ou a operação justificarem.
 
-- agendador cria um job durável por integração;
-- fila ou mecanismo equivalente distribui jobs e impede concorrência para a mesma integração;
-- banco relacional mantém integrações, interações, unicidade, checkpoints e tentativas;
-- falhas transitórias usam retentativa com espera crescente e variação aleatória;
-- falhas definitivas ou retentativas esgotadas ficam visíveis para ação;
-- logs estruturados, métricas e correlação por execução permitem diagnóstico.
-
-O mecanismo de fila e as tecnologias específicas continuam pendentes. Banco NoSQL não é necessário para esse fluxo no MVP. Banco vetorial não participa da garantia de sincronização e só deve ser considerado futuramente se existir um caso de busca semântica que o justifique.
+Banco NoSQL não é necessário para esse fluxo no MVP. Banco vetorial não participa da garantia de sincronização e só deve ser considerado futuramente se existir um caso de busca semântica que o justifique.
 
 ## Segurança e isolamento
 
@@ -96,7 +96,5 @@ Verificado em 23 de setembro de 2026:
 ## Pendente
 
 - Opções de frequência e menor intervalo permitido.
-- Tamanho da margem de sobreposição do checkpoint.
-- Política exata de retentativa por classe de erro.
-- Tecnologia de fila ou mecanismo equivalente.
+- Classificação detalhada dos erros retornados pelo iFood em transitórios e permanentes.
 - Procedimento operacional exato para transições que dependem do Portal do Desenvolvedor.

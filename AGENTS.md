@@ -13,6 +13,8 @@
 - Um módulo não acessa diretamente repositórios, tabelas internas ou adaptadores de outro módulo. Integrações entre módulos usam contratos de aplicação ou eventos explicitamente definidos.
 - Mantenha `Interaction` como conceito central e a hierarquia `Organization > Location > Integration > Interaction`. O domínio não deve depender de conceitos exclusivos de restaurantes.
 - Implemente integrações externas por meio do módulo `Connections`, com um conector por provedor e capacidades explícitas. Não espalhe detalhes do iFood pelo domínio central.
+- Preserve a idempotência, o bloqueio por integração, os checkpoints e a política de retentativas definidos no ADR-004.
+
 - Credenciais e tokens de provedores permanecem no servidor. Nunca exponha segredos ou tokens ao navegador e nunca use um identificador externo sem validar sua associação à organização autenticada.
 - Limite o MVP a avaliações do iFood associadas às integrações conectadas. Menções públicas externas pertencem à visão futura.
 - Não implemente classificação ou tratamento especial de casos críticos enquanto não existirem exemplos reais e uma regra aprovada.
