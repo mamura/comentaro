@@ -55,9 +55,9 @@ Alterar a configuração afeta somente avaliações capturadas depois da altera�
 
 ### RN-011 — Envio da notificação
 
-O estado `enviada` significa que o serviço de e-mail aceitou a mensagem. Esse estado não significa que o destinatário recebeu, abriu ou leu o e-mail.
+O estado `submitted` significa que o Resend aceitou a mensagem. Apenas um webhook válido muda o estado para `delivered`. Nenhum desses estados significa que o destinatário abriu ou leu o e-mail.
 
-Uma notificação com falha pode ser reenviada manualmente. Uma notificação aceita pelo serviço de e-mail não deve ser reenviada pelo fluxo normal.
+Uma notificação com falha pode ser reenviada manualmente. Notificações `submitted` ou `delivered` não devem ser reenviadas pelo fluxo normal. Bounces e reclamações não geram tentativa automática.
 
 ### RN-012 — Responsável pela resposta
 
@@ -89,5 +89,4 @@ Antes de oferecer ou executar o envio, o sistema deve verificar o estado atual d
 
 - Provedor de autenticação, política de senha e duração da sessão.
 - Estados e expiração da autorização da integração com o iFood.
-- Provedor de e-mail e tratamento de eventos posteriores à aceitação da mensagem.
 - Provedor, contexto e limites da sugestão por IA.

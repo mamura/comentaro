@@ -6,7 +6,6 @@
 - Mantenha frontend e backend como aplicações independentes. Organize o backend como monólito modular: primeiro por módulo de negócio e, dentro de cada módulo, por camada.
 - Trate OpenAPI como contrato entre backend e frontend; não duplique ou invente contratos divergentes.
 - Para a SPA própria, use Sanctum com sessão em cookie e proteção CSRF conforme o ADR-003. Não substitua esse fluxo por JWT sem uma nova decisão arquitetural.
-
 - Mantenha autorização, isolamento por organização e credenciais de provedores exclusivamente no backend.
 - Mantenha domínio, casos de uso e adaptadores com responsabilidades explícitas. Dependências devem apontar para o núcleo do módulo.
 - Não crie interfaces, objetos de transferência, mapeadores ou camadas sem uma necessidade concreta. Aplique a separação suficiente para proteger regras de negócio e limites externos.
@@ -14,7 +13,7 @@
 - Mantenha `Interaction` como conceito central e a hierarquia `Organization > Location > Integration > Interaction`. O domínio não deve depender de conceitos exclusivos de restaurantes.
 - Implemente integrações externas por meio do módulo `Connections`, com um conector por provedor e capacidades explícitas. Não espalhe detalhes do iFood pelo domínio central.
 - Preserve a idempotência, o bloqueio por integração, os checkpoints e a política de retentativas definidos no ADR-004.
-
+- Envie e-mails pela abstração do Laravel e preserve o Resend atrás do adaptador definido no ADR-005. Valide e torne idempotentes os webhooks do provedor.
 - Credenciais e tokens de provedores permanecem no servidor. Nunca exponha segredos ou tokens ao navegador e nunca use um identificador externo sem validar sua associação à organização autenticada.
 - Limite o MVP a avaliações do iFood associadas às integrações conectadas. Menções públicas externas pertencem à visão futura.
 - Não implemente classificação ou tratamento especial de casos críticos enquanto não existirem exemplos reais e uma regra aprovada.

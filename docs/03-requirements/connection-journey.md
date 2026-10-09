@@ -44,7 +44,6 @@ A propagação da permissão pelo iFood pode não ser imediata. O sistema deve a
 
 ## Configuração de frequência
 
-- Cada integração possui sua própria frequência de sincronização.
-- O valor inicial é uma hora.
-- Alterar a frequência afeta as próximas execuções e não inicia automaticamente uma importação histórica.
-- As opções e o menor intervalo permitido serão definidos de acordo com capacidade operacional e limites do provedor.
+- No MVP, todas as integrações usam a frequência de uma hora.
+- A configuração de outras frequências será adicionada depois da entrada em produção.
+- Uma alteração futura de frequência afetará apenas as próximas execuções e não iniciará automaticamente uma importação histórica.

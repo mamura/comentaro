@@ -136,7 +136,7 @@ Ao ativar uma integração, o Comentaro importa avaliações dos 30 dias anterio
 
 **Status:** Aceita
 
-A frequência é configurável por integração e começa em uma hora. Opções adicionais e o menor intervalo poderão ser definidos depois que a aplicação estiver em produção, com base no comportamento observado e nos limites da API. Isso não bloqueia o MVP.
+No MVP, todas as integrações sincronizam a cada hora. A configuração de outras frequências e de um eventual menor intervalo será adicionada depois que a aplicação estiver em produção, com base no comportamento observado e nos limites da API.
 
 ## DEC-023 — Garantias de sincronização
 
@@ -145,3 +145,12 @@ A frequência é configurável por integração e começa em uma hora. Opções 
 Falhas ou atrasos não podem criar duplicatas nem avançar o progresso além de dados persistidos. A sincronização retoma do último ponto confirmado com cinco minutos de sobreposição, expõe seu estado e mantém histórico das tentativas.
 
 A fila inicial usa PostgreSQL por meio do Laravel Queue. Jobs possuem responsabilidades separadas, uma integração não executa duas sincronizações simultâneas e efeitos externos são idempotentes. São permitidas até cinco tentativas, com execução imediata e esperas de 1 minuto, 5 minutos, 15 minutos e 1 hora. Erros permanentes exigem ação sem repetir indefinidamente.
+
+
+## DEC-024 — Provedor de e-mail transacional
+
+**Status:** Aceita
+
+O Resend será o provedor de produção para confirmação de e-mail, recuperação de senha, notificações de novas avaliações e avisos operacionais. O desenvolvimento usa Mailpit e os testes automatizados usam o transporte falso do Laravel. Templates permanecem versionados no backend.
+
+Eventos assinados do provedor distinguem mensagem aceita, entregue, rejeitada, devolvida ou marcada como indesejada. O MVP não rastreia abertura nem clique.

@@ -12,7 +12,7 @@ O texto é analisado separadamente para inferir satisfação e confiança. A sat
 
 ## 3. Notificar o responsável
 
-Se as notificações do estabelecimento estiverem ativas, cada nova avaliação gera aviso para o responsável. Se estiverem silenciadas, a avaliação permanece disponível na caixa de entrada, sem aviso externo. O canal de entrega ainda precisa ser definido.
+Se as notificações do estabelecimento estiverem ativas, cada nova avaliação gera aviso para o responsável. Se estiverem silenciadas, a avaliação permanece disponível na caixa de entrada, sem aviso externo. O aviso é enviado por e-mail através do provedor transacional.
 
 ## 4. Preparar e enviar a resposta
 

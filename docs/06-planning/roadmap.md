@@ -13,7 +13,7 @@
 2. Cadastrar um estabelecimento.
 3. Iniciar, acompanhar e ativar sua conexão com o iFood.
 4. Importar até 100 avaliações dos 30 dias anteriores sem notificações históricas.
-5. Sincronizar periodicamente, com padrão de uma hora e frequência configurável.
+5. Sincronizar periodicamente a cada hora.
 6. Classificar prioridade pela nota.
 7. Inferir satisfação e confiança a partir do comentário.
 8. Exibir a caixa de entrada, o detalhe e os estados independentes da interação.
@@ -29,7 +29,7 @@
 ## Antes da implementação
 
 - Materializar a estrutura inicial `apps/api` e `apps/web` conforme o ADR-002.
-- Definir provedores de e-mail e IA.
+- Definir provedor de IA.
 - Definir hospedagem e observabilidade.
 
 As histórias e seus critérios de aceite estão documentados em [mvp-stories.md](mvp-stories.md) e [acceptance-criteria.md](../03-requirements/acceptance-criteria.md).

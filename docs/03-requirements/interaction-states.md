@@ -15,9 +15,12 @@ Os estados são independentes. A interação não possui um único estado que mi
 
 | Estado | Significado |
 | --- | --- |
-| `pending` | O envio de e-mail ainda não terminou. |
-| `sent` | O serviço de e-mail aceitou a mensagem. |
-| `failed` | O serviço não aceitou a mensagem ou o envio não pôde ser concluído. |
+| `pending` | A notificação aguarda processamento. |
+| `submitted` | O Resend aceitou a mensagem. |
+| `delivered` | O webhook confirmou a entrega. |
+| `failed` | O envio não foi aceito ou esgotou as tentativas. |
+| `bounced` | O provedor informou rejeição pelo destino. |
+| `complained` | O destinatário marcou a mensagem como indesejada. |
 | `silenced` | A configuração do estabelecimento impediu o envio. |
 
 ## Resposta
