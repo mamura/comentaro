@@ -1,8 +1,14 @@
 # Arquitetura — estado inicial
 
-Ainda não há aplicação nem arquitetura técnica implementada. Esta etapa registra limites e decisões conceituais para o desenho posterior.
+O Comentaro será um monólito modular. A aplicação terá uma única unidade de implantação, dividida internamente por módulos de negócio com limites explícitos e camadas pragmáticas.
 
-O desenho futuro deve contemplar cadastro e autenticação, isolamento por organização, conexões externas, captura e normalização de interações, análise e priorização, notificação, apoio à resposta e histórico.
+## Forma e camadas
+
+Cada módulo separa domínio, aplicação e adaptadores na medida necessária para proteger regras e dependências externas. A direção das dependências aponta para o núcleo do módulo. Não será aplicada uma versão cerimonial de Clean Architecture com abstrações sem uso concreto.
+
+Módulos se comunicam por contratos públicos de aplicação ou eventos explícitos. Um módulo não acessa diretamente repositórios, tabelas internas ou adaptadores de outro.
+
+Consulte [modular-monolith.md](modular-monolith.md) e [ADR-001](adr/001-modular-monolith.md).
 
 ## Diretriz de isolamento
 
@@ -22,7 +28,8 @@ Consulte [integrations.md](integrations.md) para o desenho conceitual e as restr
 
 ## Decisões pendentes
 
-- Stack, componentes, persistência e hospedagem.
+- Linguagem, frameworks e organização física do código.
+- Persistência e hospedagem.
 - Provedor e mecanismo de autenticação e recuperação de acesso.
 - Estratégia técnica de isolamento e testes contra acesso entre organizações.
 - Tecnologia de jobs, fila e observabilidade e políticas exatas de retentativa.
