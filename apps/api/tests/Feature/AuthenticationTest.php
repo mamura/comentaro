@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\URL;
 
 uses(RefreshDatabase::class);
 
+beforeEach(function (): void {
+    $this->withHeader('Origin', config('app.frontend_url'));
+});
+
 it('registers a user and organization atomically and requests email verification', function () {
     Notification::fake();
 
@@ -99,6 +103,11 @@ it('logs out the current session', function () {
         'name' => 'Ana', 'email' => 'ana@example.com', 'password' => 'senha-segura',
     ]);
 
-    $this->actingAs($user)->postJson('/api/v1/auth/logout')->assertOk();
-    $this->assertGuest();
+    $this->postJson('/api/v1/auth/login', [
+        'email' => $user->email,
+        'password' => 'senha-segura',
+    ])->assertOk();
+
+    $this->postJson('/api/v1/auth/logout')->assertOk();
+    $this->getJson('/api/v1/auth/user')->assertUnauthorized();
 });
