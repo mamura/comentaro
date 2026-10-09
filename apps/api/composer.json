@@ -52,7 +52,7 @@
         ],
         "test": [
             "@php artisan config:clear --ansi @no_additional_args",
-            "@php vendor/bin/pest"
+            "@php vendor/bin/pest tests/Feature"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
