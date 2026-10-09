@@ -22,7 +22,7 @@
 - Integrações diferentes podem executar em paralelo.
 - O bloqueio por integração possui expiração para permitir recuperação depois de interrupções.
 
-As opções configuráveis de frequência e o menor intervalo permitido ainda dependem dos limites operacionais e da API.
+No MVP, a frequência permanece em uma hora. Opções adicionais e um eventual menor intervalo serão configurados depois da entrada em produção, com base em dados operacionais e nos limites da API.
 
 ## Jobs
 

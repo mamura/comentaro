@@ -48,4 +48,4 @@ Não são necessários para durabilidade, idempotência ou histórico deste flux
 - Checkpoints avançam apenas depois da persistência correspondente.
 - Falhas finais permanecem visíveis e permitem nova tentativa segura.
 - Redis, Horizon e workers separados poderão ser introduzidos sem mudar as regras da jornada.
-- Opções de frequência e limites específicos ainda dependerão da capacidade da API do provedor.
+- O MVP usa a frequência de uma hora; opções adicionais serão avaliadas após a entrada em produção.

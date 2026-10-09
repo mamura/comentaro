@@ -95,6 +95,5 @@ Verificado em 23 de setembro de 2026:
 
 ## Pendente
 
-- Opções de frequência e menor intervalo permitido.
 - Classificação detalhada dos erros retornados pelo iFood em transitórios e permanentes.
 - Procedimento operacional exato para transições que dependem do Portal do Desenvolvedor.

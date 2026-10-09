@@ -136,7 +136,7 @@ Ao ativar uma integração, o Comentaro importa avaliações dos 30 dias anterio
 
 **Status:** Aceita
 
-A frequência é configurável por integração e começa em uma hora. As opções disponíveis e o menor intervalo permitido serão definidos com os limites operacionais e da API.
+A frequência é configurável por integração e começa em uma hora. Opções adicionais e o menor intervalo poderão ser definidos depois que a aplicação estiver em produção, com base no comportamento observado e nos limites da API. Isso não bloqueia o MVP.
 
 ## DEC-023 — Garantias de sincronização
 
