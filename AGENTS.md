@@ -18,4 +18,6 @@
 - Limite o MVP a avaliações do iFood associadas às integrações conectadas. Menções públicas externas pertencem à visão futura.
 - Não implemente classificação ou tratamento especial de casos críticos enquanto não existirem exemplos reais e uma regra aprovada.
 - Registre novas decisões de produto em `docs/02-discovery/decisions.md` e decisões de arquitetura em `docs/05-architecture/adr/` quando forem tomadas.
+- Use `make test` para a suíte completa e `make lint` para formatação, análise estática, lint e tipos.
+- Altere `contracts/openapi.yaml` antes ou junto de mudanças no contrato HTTP e regenere os tipos com `make generate-api`.
 - Trabalhe em mudanças pequenas e verificáveis. Antes de implementar uma funcionalidade futura, confirme seus critérios e a viabilidade do canal envolvido.

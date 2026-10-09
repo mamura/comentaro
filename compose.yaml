@@ -1,0 +1,81 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: comentaro
+      POSTGRES_USER: comentaro
+      POSTGRES_PASSWORD: comentaro
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/01-create-test-database.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U comentaro -d comentaro"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mailpit:
+    image: axllent/mailpit:v1.28
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile.dev
+    env_file: [./apps/api/.env]
+    ports: ["8000:8000"]
+    volumes:
+      - ./apps/api:/app
+      - api_vendor:/app/vendor
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+
+  worker:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile.dev
+    command: php artisan queue:work --sleep=3 --tries=5 --timeout=120
+    env_file: [./apps/api/.env]
+    volumes:
+      - ./apps/api:/app
+      - api_vendor:/app/vendor
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  scheduler:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile.dev
+    command: php artisan schedule:work
+    env_file: [./apps/api/.env]
+    volumes:
+      - ./apps/api:/app
+      - api_vendor:/app/vendor
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile.dev
+    environment:
+      VITE_API_URL: http://localhost:8000/api/v1
+    ports: ["5173:5173"]
+    volumes:
+      - ./apps/web:/app
+      - web_node_modules:/app/node_modules
+    depends_on: [api]
+
+volumes:
+  api_vendor:
+  postgres_data:
+  web_node_modules:

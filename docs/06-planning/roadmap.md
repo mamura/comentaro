@@ -26,9 +26,14 @@
 12. Gerar sugestão de resposta por IA.
 13. Permitir revisão e edição da sugestão antes do envio.
 
-## Antes da implementação
+## Fundação técnica — concluída
 
-- Materializar a estrutura inicial `apps/api` e `apps/web` conforme o ADR-002.
+- Monorepo com `apps/api`, `apps/web` e contrato OpenAPI compartilhado.
+- Ambiente local com PostgreSQL, Mailpit, API, worker, scheduler e frontend via Docker Compose.
+- Qualidade automatizada para backend, frontend e contrato da API.
+
+## Antes da funcionalidade de assistência por IA
+
 - Definir provedor de IA.
 
 ## Antes do lançamento
