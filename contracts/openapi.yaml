@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Comentaro API
-  version: 0.1.0
+  version: 0.2.0
   description: Contrato HTTP entre a API Laravel e a aplicação web.
   license:
     name: Proprietary
@@ -21,53 +21,222 @@ paths:
           description: API disponível
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Health'
+              schema: {$ref: '#/components/schemas/Health'}
+  /auth/register:
+    post:
+      operationId: register
+      summary: Cria usuário e organização na mesma operação
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/RegisterRequest'}
+      responses:
+        '201': {$ref: '#/components/responses/AuthenticatedUser'}
+        '422': {$ref: '#/components/responses/ValidationError'}
+        '429': {$ref: '#/components/responses/TooManyRequests'}
+  /auth/login:
+    post:
+      operationId: login
+      summary: Inicia uma sessão por cookie
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/LoginRequest'}
+      responses:
+        '200': {$ref: '#/components/responses/AuthenticatedUser'}
+        '422': {$ref: '#/components/responses/ValidationError'}
+        '429': {$ref: '#/components/responses/TooManyRequests'}
+  /auth/user:
+    get:
+      operationId: getAuthenticatedUser
+      summary: Retorna o usuário e a organização da sessão
+      tags: [Authentication]
+      security: [{cookieAuth: []}]
+      responses:
+        '200': {$ref: '#/components/responses/AuthenticatedUser'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+  /auth/logout:
+    post:
+      operationId: logout
+      summary: Encerra a sessão atual
+      tags: [Authentication]
+      security: [{cookieAuth: []}]
+      responses:
+        '200': {$ref: '#/components/responses/Message'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+  /auth/email/verification-notification:
+    post:
+      operationId: resendEmailVerification
+      summary: Reenvia a confirmação quando necessária
+      tags: [Authentication]
+      security: [{cookieAuth: []}]
+      responses:
+        '200': {$ref: '#/components/responses/Message'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '429': {$ref: '#/components/responses/TooManyRequests'}
+  /auth/email/verify/{id}/{hash}:
+    get:
+      operationId: verifyEmail
+      summary: Confirma o e-mail por URL temporária assinada
+      tags: [Authentication]
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: integer}}
+        - {name: hash, in: path, required: true, schema: {type: string}}
+        - {name: expires, in: query, required: true, schema: {type: integer}}
+        - {name: signature, in: query, required: true, schema: {type: string}}
+      responses:
+        '302': {description: E-mail confirmado e redirecionado para o frontend}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /auth/forgot-password:
+    post:
+      operationId: forgotPassword
+      summary: Solicita recuperação com resposta neutra
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties: {email: {type: string, format: email}}
+      responses:
+        '200': {$ref: '#/components/responses/Message'}
+        '422': {$ref: '#/components/responses/ValidationError'}
+        '429': {$ref: '#/components/responses/TooManyRequests'}
+  /auth/reset-password:
+    post:
+      operationId: resetPassword
+      summary: Redefine a senha com mecanismo temporário
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ResetPasswordRequest'}
+      responses:
+        '200': {$ref: '#/components/responses/Message'}
+        '422': {$ref: '#/components/responses/ValidationError'}
+        '429': {$ref: '#/components/responses/TooManyRequests'}
 components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: comentaro-session
+      description: Sessão Sanctum; mutações também exigem o token CSRF emitido por /sanctum/csrf-cookie.
+  responses:
+    AuthenticatedUser:
+      description: Usuário autenticado
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [user]
+            properties: {user: {$ref: '#/components/schemas/User'}}
+    Message:
+      description: Operação concluída
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Message'}
+    ValidationError:
+      description: Dados inválidos
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    Unauthenticated:
+      description: Sessão ausente ou inválida
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    Forbidden:
+      description: Mecanismo inválido ou expirado
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    NotFound:
+      description: Recurso não encontrado
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    TooManyRequests:
+      description: Limite de tentativas excedido
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
   schemas:
     Health:
       type: object
       required: [status, service, version, timestamp]
       properties:
-        status:
-          type: string
-          const: ok
-        service:
-          type: string
-          const: comentaro-api
-        version:
-          type: string
-          examples: [0.1.0]
-        timestamp:
-          type: string
-          format: date-time
+        status: {type: string, const: ok}
+        service: {type: string, const: comentaro-api}
+        version: {type: string, examples: [0.2.0]}
+        timestamp: {type: string, format: date-time}
+    Organization:
+      type: object
+      required: [id, name]
+      properties:
+        id: {type: integer}
+        name: {type: string}
+    User:
+      type: object
+      required: [id, name, email, email_verified, organization]
+      properties:
+        id: {type: integer}
+        name: {type: string}
+        email: {type: string, format: email}
+        email_verified: {type: boolean}
+        organization: {$ref: '#/components/schemas/Organization'}
+    RegisterRequest:
+      type: object
+      required: [name, organization_name, email, password, password_confirmation]
+      properties:
+        name: {type: string, maxLength: 120}
+        organization_name: {type: string, maxLength: 160}
+        email: {type: string, format: email, maxLength: 254}
+        password: {type: string, format: password, minLength: 10}
+        password_confirmation: {type: string, format: password, minLength: 10}
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: {type: string, format: email}
+        password: {type: string, format: password}
+        remember: {type: boolean, default: false}
+    ResetPasswordRequest:
+      type: object
+      required: [token, email, password, password_confirmation]
+      properties:
+        token: {type: string}
+        email: {type: string, format: email}
+        password: {type: string, format: password, minLength: 10}
+        password_confirmation: {type: string, format: password, minLength: 10}
+    Message:
+      type: object
+      required: [message]
+      properties: {message: {type: string}}
     Error:
       type: object
       required: [message]
       properties:
-        message:
-          type: string
-        code:
-          type: [string, 'null']
+        message: {type: string}
+        code: {type: [string, 'null']}
         errors:
           type: [object, 'null']
           additionalProperties:
             type: array
-            items:
-              type: string
+            items: {type: string}
     PaginationMeta:
       type: object
       required: [current_page, per_page, total, last_page]
       properties:
-        current_page:
-          type: integer
-          minimum: 1
-        per_page:
-          type: integer
-          minimum: 1
-        total:
-          type: integer
-          minimum: 0
-        last_page:
-          type: integer
-          minimum: 1
+        current_page: {type: integer, minimum: 1}
+        per_page: {type: integer, minimum: 1}
+        total: {type: integer, minimum: 0}
+        last_page: {type: integer, minimum: 1}
