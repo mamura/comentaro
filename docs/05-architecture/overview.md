@@ -8,7 +8,7 @@ Cada módulo separa domínio, aplicação e adaptadores na medida necessária pa
 
 Módulos se comunicam por contratos públicos de aplicação ou eventos explícitos. Um módulo não acessa diretamente repositórios, tabelas internas ou adaptadores de outro.
 
-Consulte [modular-monolith.md](modular-monolith.md), [ADR-001](adr/001-modular-monolith.md) e [ADR-002](adr/002-technology-stack-and-application-boundaries.md).
+Consulte [modular-monolith.md](modular-monolith.md), [ADR-001](adr/001-modular-monolith.md), [ADR-002](adr/002-technology-stack-and-application-boundaries.md) e [ADR-003](adr/003-spa-authentication.md).
 
 ## Diretriz de isolamento
 
@@ -32,15 +32,15 @@ Consulte [integrations.md](integrations.md) para o desenho conceitual e as restr
 - Frontend: React 19, TypeScript, Vite, React Router, TanStack Query, Tailwind CSS, shadcn/ui e Vitest.
 - Contrato: OpenAPI, com tipos TypeScript gerados ou validados a partir da especificação.
 - Persistência: PostgreSQL.
-- Autenticação web: Laravel Sanctum com cookies seguros.
+- Autenticação web: Laravel Sanctum com sessão em cookie seguro, proteção CSRF e revogação no servidor.
 - Ambiente local: Docker Compose.
 - Organização física inicial: monorepo com `apps/api` e `apps/web`.
 
 ## Decisões pendentes
 
 - Provedor de hospedagem e topologia de produção.
-- Política de senha, duração da sessão e entrega de recuperação de acesso.
-- Estratégia técnica de isolamento e testes contra acesso entre organizações.
+- Provedor de e-mail para confirmação e recuperação de acesso.
+- Implementação dos controles e testes contra acesso entre organizações.
 - Observabilidade e políticas exatas de retentativa.
 - Provedores de IA e e-mail.
 

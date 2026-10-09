@@ -5,6 +5,8 @@
 - Não implemente a aplicação ou contrate serviços sem uma tarefa explícita. Preserve a stack aprovada no ADR-002.
 - Mantenha frontend e backend como aplicações independentes. Organize o backend como monólito modular: primeiro por módulo de negócio e, dentro de cada módulo, por camada.
 - Trate OpenAPI como contrato entre backend e frontend; não duplique ou invente contratos divergentes.
+- Para a SPA própria, use Sanctum com sessão em cookie e proteção CSRF conforme o ADR-003. Não substitua esse fluxo por JWT sem uma nova decisão arquitetural.
+
 - Mantenha autorização, isolamento por organização e credenciais de provedores exclusivamente no backend.
 - Mantenha domínio, casos de uso e adaptadores com responsabilidades explícitas. Dependências devem apontar para o núcleo do módulo.
 - Não crie interfaces, objetos de transferência, mapeadores ou camadas sem uma necessidade concreta. Aplique a separação suficiente para proteger regras de negócio e limites externos.

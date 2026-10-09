@@ -12,33 +12,67 @@
 
 ## Jornada de cadastro
 
-1. O usuário informa os dados mínimos da conta, incluindo e-mail e senha, e o nome da organização.
-2. O Comentaro cria o usuário e sua organização vinculada na mesma operação.
-3. O sistema envia uma mensagem para confirmação do endereço de e-mail.
-4. Depois de confirmar o e-mail e entrar, o usuário cadastra o primeiro estabelecimento.
-5. O usuário conecta o estabelecimento ao iFood.
+1. O usuário informa nome, e-mail, senha, confirmação da senha e nome da organização.
+2. Quando aplicável, o usuário aceita os termos apresentados.
+3. O Comentaro cria o usuário e sua organização vinculada na mesma transação.
+4. O sistema envia uma mensagem para confirmação do endereço de e-mail.
+5. O usuário pode entrar antes de confirmar o e-mail, mas as funcionalidades internas permanecem bloqueadas.
+6. Depois de confirmar o e-mail, o usuário cadastra o primeiro estabelecimento e inicia sua conexão com o iFood.
 
-## Autenticação e recuperação
+Se a criação do usuário ou da organização falhar, a operação inteira deve ser desfeita.
 
-- A entrada usa e-mail e senha.
-- O endereço de e-mail precisa ser confirmado antes do uso normal da aplicação.
-- A sessão permanece válida entre acessos conforme duração a ser definida na arquitetura.
-- O usuário pode encerrar a sessão explicitamente.
-- A recuperação de senha começa pelo e-mail cadastrado e utiliza um mecanismo temporário de redefinição.
-- Mensagens de cadastro e recuperação não devem revelar se uma conta alheia existe além do necessário para o fluxo.
+## Política de senha
 
-Provedor, política de senha, duração da sessão e formato dos mecanismos temporários serão definidos na arquitetura.
+- A senha deve ter no mínimo 10 caracteres.
+- O cadastro exige confirmação da senha.
+- O MVP não exige combinações específicas de letras maiúsculas, minúsculas, números e símbolos.
+- O backend armazena apenas o hash seguro da senha.
+- Login, confirmação e recuperação possuem limites de tentativas.
 
-## Evolução futura
+## Confirmação de e-mail
 
-Se o Comentaro se tornar um produto comercial, devem ser avaliados:
+- O link de confirmação é válido por 60 minutos e pode ser usado uma única vez.
+- O usuário pode solicitar um novo envio.
+- O reenvio possui limitação de frequência.
+- A confirmação anterior perde efeito quando o endereço de e-mail for alterado.
+- As respostas públicas não devem revelar indevidamente se uma conta existe.
 
+## Sessão
+
+- A autenticação da SPA usa Laravel Sanctum com sessão em cookie.
+- A sessão comum expira depois de duas horas de inatividade.
+- A opção “Manter conectado” estende o acesso por até 30 dias.
+- O logout encerra a sessão atual.
+- A alteração de senha encerra as demais sessões.
+- Cookies de produção devem usar `HttpOnly`, `Secure` e uma política `SameSite` compatível com a implantação.
+- A proteção CSRF é obrigatória.
+- O frontend nunca armazena a credencial de sessão em `localStorage`.
+
+## Recuperação de senha
+
+- A solicitação começa pelo e-mail cadastrado.
+- A resposta pública é neutra e não confirma se o endereço possui conta.
+- O link temporário é válido por 60 minutos e pode ser usado uma única vez.
+- Solicitações possuem limitação de frequência.
+- A redefinição bem-sucedida encerra as demais sessões.
+
+## Isolamento por organização
+
+- O backend obtém a organização a partir do usuário autenticado.
+- O cliente não escolhe o escopo de acesso enviando uma `organization_id`.
+- Recursos pertencentes ao cliente carregam ou derivam sua organização.
+- Consultas, comandos, jobs e políticas de autorização validam esse limite.
+- Testes devem tentar acessar recursos de outra organização e comprovar a rejeição.
+- Ocultar uma ação no frontend não substitui a autorização no backend.
+
+## Fora do MVP
+
+- autenticação social;
+- segundo fator de autenticação;
 - múltiplos usuários por organização;
-- convites e remoção de membros;
+- convites;
 - papéis e permissões;
 - usuário associado a mais de uma organização;
-- administração da assinatura, planos e cobrança;
-- suporte operacional entre organizações;
-- estratégia técnica de isolamento, auditoria e migração de dados.
+- administração de planos e cobrança.
 
-Essas possibilidades não autorizam implementação antecipada no MVP.
+Aplicativos móveis poderão usar tokens de API do Sanctum. OAuth2 com Laravel Passport será avaliado apenas se o Comentaro precisar autorizar aplicações de terceiros.

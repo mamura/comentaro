@@ -29,7 +29,6 @@
 ## Antes da implementação
 
 - Materializar a estrutura inicial `apps/api` e `apps/web` conforme o ADR-002.
-- Definir política de senha e duração da sessão.
 - Definir opções de frequência, margem de sobreposição e política de retentativa.
 - Definir provedores de e-mail e IA.
 - Definir hospedagem e observabilidade.

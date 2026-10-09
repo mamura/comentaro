@@ -98,7 +98,9 @@ O MVP terá cadastro e autenticação simples, um usuário por organização e n
 
 **Status:** Aceita
 
-O cadastro cria o usuário e a organização na mesma jornada. O acesso usa e-mail e senha, requer confirmação do e-mail, permite recuperação da senha e mantém uma sessão persistente com opção de sair. Provedor, política de senha e duração da sessão serão decisões técnicas posteriores.
+O cadastro cria usuário e organização atomicamente e solicita nome, e-mail, senha, confirmação da senha e nome da organização. O acesso usa e-mail e senha. O usuário pode entrar antes de confirmar o e-mail, mas só utiliza as funcionalidades internas depois da confirmação.
+
+A senha tem no mínimo 10 caracteres. Confirmação e recuperação usam links de uso único válidos por 60 minutos. A sessão comum expira depois de duas horas de inatividade, com opção de manter o acesso por até 30 dias. O MVP não inclui autenticação social nem segundo fator.
 
 ## DEC-017 — Módulo de conexões
 
