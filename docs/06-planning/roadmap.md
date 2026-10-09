@@ -28,10 +28,11 @@
 
 ## Antes da implementação
 
-- Escolher provedor de autenticação e definir política de senha e duração da sessão.
+- Materializar a estrutura inicial `apps/api` e `apps/web` conforme o ADR-002.
+- Definir política de senha e duração da sessão.
 - Definir opções de frequência, margem de sobreposição e política de retentativa.
 - Definir provedores de e-mail e IA.
-- Definir a arquitetura técnica e registrar suas decisões.
+- Definir hospedagem e observabilidade.
 
 As histórias e seus critérios de aceite estão documentados em [mvp-stories.md](mvp-stories.md) e [acceptance-criteria.md](../03-requirements/acceptance-criteria.md).
 

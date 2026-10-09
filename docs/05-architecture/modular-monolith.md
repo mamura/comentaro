@@ -2,7 +2,9 @@
 
 ## Forma da aplicação
 
-O Comentaro será uma única aplicação implantável, organizada em módulos de negócio com limites explícitos. Os módulos compartilham o processo e podem compartilhar a infraestrutura física, mas não compartilham livremente suas implementações internas.
+O backend do Comentaro será uma única aplicação implantável, organizada em módulos de negócio com limites explícitos. Os módulos compartilham o processo e podem compartilhar a infraestrutura física, mas não compartilham livremente suas implementações internas.
+
+O frontend é uma aplicação independente e acessa o backend somente pela API publicada. A separação entre as aplicações e a stack estão registradas no [ADR-002](adr/002-technology-stack-and-application-boundaries.md).
 
 Os limites iniciais esperados são:
 

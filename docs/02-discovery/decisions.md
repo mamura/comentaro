@@ -26,9 +26,11 @@ O MVP não classifica nem aplica um fluxo especial a casos críticos. A regra se
 
 ## DEC-005 — Arquitetura técnica
 
-**Status:** Pendente
+**Status:** Aceita
 
-Stack, desenho de componentes, persistência, hospedagem e provedores não foram decididos nem implementados.
+O frontend e o backend serão aplicações independentes no mesmo repositório. O backend será um monólito modular em PHP 8.5 e Laravel 13, com API REST JSON, PostgreSQL, Laravel Queue, Laravel Scheduler e Pest. O frontend usará React 19, TypeScript, Vite, React Router, TanStack Query, Tailwind CSS, shadcn/ui e Vitest.
+
+OpenAPI definirá o contrato entre as aplicações. A autenticação web usará Laravel Sanctum com cookies seguros. O ambiente local será coordenado com Docker Compose. Detalhes e consequências estão registrados no ADR-002.
 
 ## DEC-006 — Primeiro canal
 

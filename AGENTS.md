@@ -2,8 +2,10 @@
 
 - Leia a visão, o escopo, as decisões, as jornadas, as regras de negócio e o modelo de domínio antes de propor código.
 - Preserve as decisões registradas. Não transforme hipóteses ou pendências em requisitos confirmados sem validação do responsável pelo produto.
-- Não implemente aplicação, escolha stack ou contrate serviços apenas com base nesta documentação inicial.
-- Organize a aplicação como monólito modular: primeiro por módulo de negócio e, dentro de cada módulo, por camada.
+- Não implemente a aplicação ou contrate serviços sem uma tarefa explícita. Preserve a stack aprovada no ADR-002.
+- Mantenha frontend e backend como aplicações independentes. Organize o backend como monólito modular: primeiro por módulo de negócio e, dentro de cada módulo, por camada.
+- Trate OpenAPI como contrato entre backend e frontend; não duplique ou invente contratos divergentes.
+- Mantenha autorização, isolamento por organização e credenciais de provedores exclusivamente no backend.
 - Mantenha domínio, casos de uso e adaptadores com responsabilidades explícitas. Dependências devem apontar para o núcleo do módulo.
 - Não crie interfaces, objetos de transferência, mapeadores ou camadas sem uma necessidade concreta. Aplique a separação suficiente para proteger regras de negócio e limites externos.
 - Um módulo não acessa diretamente repositórios, tabelas internas ou adaptadores de outro módulo. Integrações entre módulos usam contratos de aplicação ou eventos explicitamente definidos.

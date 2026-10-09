@@ -6,7 +6,7 @@ O primeiro vertical é o de restaurantes, mas o domínio deve servir a outros ti
 
 ## Estado do projeto
 
-Esta etapa contém documentação inicial. A aplicação e a arquitetura técnica ainda não foram implementadas. Integrações, canais de notificação, stack e regras detalhadas dependem de validação.
+Esta etapa contém documentação e decisões arquiteturais iniciais. A aplicação ainda não foi implementada. A stack aprovada separa um backend Laravel modular de um frontend React, com contrato OpenAPI e PostgreSQL. Integrações e regras detalhadas continuam sendo validadas antes da implementação.
 
 ## Documentação
 
