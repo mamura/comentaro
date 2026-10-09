@@ -30,7 +30,12 @@
 
 - Materializar a estrutura inicial `apps/api` e `apps/web` conforme o ADR-002.
 - Definir provedor de IA.
-- Definir hospedagem e observabilidade.
+
+## Antes do lançamento
+
+- Definir provedor, região e topologia de hospedagem.
+- Definir deploy, backups externos, retenção e teste de restauração.
+- Definir monitoramento, captura de exceções e alertas operacionais.
 
 As histórias e seus critérios de aceite estão documentados em [mvp-stories.md](mvp-stories.md) e [acceptance-criteria.md](../03-requirements/acceptance-criteria.md).
 

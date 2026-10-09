@@ -154,3 +154,10 @@ A fila inicial usa PostgreSQL por meio do Laravel Queue. Jobs possuem responsabi
 O Resend será o provedor de produção para confirmação de e-mail, recuperação de senha, notificações de novas avaliações e avisos operacionais. O desenvolvimento usa Mailpit e os testes automatizados usam o transporte falso do Laravel. Templates permanecem versionados no backend.
 
 Eventos assinados do provedor distinguem mensagem aceita, entregue, rejeitada, devolvida ou marcada como indesejada. O MVP não rastreia abertura nem clique.
+
+
+## DEC-025 — Momento da decisão de hospedagem
+
+**Status:** Adiada
+
+Provedor, região, topologia de produção, backups externos e observabilidade serão definidos depois do desenvolvimento e antes do lançamento. O desenvolvimento deve permanecer reproduzível localmente com Docker Compose e não depender de um provedor de hospedagem específico.

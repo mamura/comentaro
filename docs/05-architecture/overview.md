@@ -38,10 +38,15 @@ Consulte [integrations.md](integrations.md) para o desenho conceitual e as restr
 
 ## Decisões pendentes
 
-- Provedor de hospedagem e topologia de produção.
 - Implementação dos controles e testes contra acesso entre organizações.
-- Plataforma externa de monitoramento e alertas operacionais.
 - Provedor de IA.
+
+## Decisões adiadas até a preparação do lançamento
+
+- Provedor de hospedagem e topologia de produção.
+- Estratégia de deploy e eventual ambiente permanente de homologação.
+- Backups externos, retenção e procedimento de restauração.
+- Plataforma externa de monitoramento e alertas operacionais.
 
 Consulte [transactional-email.md](transactional-email.md) para a arquitetura de e-mail e os estados de entrega.
 
