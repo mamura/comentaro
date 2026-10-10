@@ -19,13 +19,20 @@ it('blocks the internal journey until the email is verified', async () => {
 })
 
 
-it('shows locations returned for the authenticated organization', async () => {
-  vi.spyOn(globalThis, 'fetch')
-    .mockResolvedValueOnce(new Response(JSON.stringify({ user: { id: 1, name: 'Ana', email: 'ana@example.com', email_verified: true, organization: { id: 1, name: 'Organização A' } } }), { status: 200, headers: { 'Content-Type': 'application/json' } }))
-    .mockResolvedValueOnce(new Response(JSON.stringify({ data: [{ id: 10, name: 'Unidade Centro' }] }), { status: 200, headers: { 'Content-Type': 'application/json' } }))
-    .mockResolvedValueOnce(new Response(JSON.stringify({ data: [] }), { status: 200, headers: { 'Content-Type': 'application/json' } }))
+it('shows locations and the interaction inbox for the authenticated organization', async () => {
+  vi.spyOn(globalThis, 'fetch').mockImplementation(async (input) => {
+    const url = String(input)
+    const json = url.endsWith('/auth/user')
+      ? { user: { id: 1, name: 'Ana', email: 'ana@example.com', email_verified: true, organization: { id: 1, name: 'Organização A' } } }
+      : url.endsWith('/locations')
+        ? { data: [{ id: 10, name: 'Unidade Centro' }] }
+        : { data: [] }
+
+    return new Response(JSON.stringify(json), { status: 200, headers: { 'Content-Type': 'application/json' } })
+  })
   render(<QueryClientProvider client={new QueryClient()}><MemoryRouter initialEntries={['/']}><App /></MemoryRouter></QueryClientProvider>)
   expect(await screen.findByText('Unidade Centro')).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: 'Interações recentes' })).toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'Cadastrar estabelecimento' })).toBeInTheDocument()
   expect(await screen.findByRole('heading', { name: 'Conexão com o iFood' })).toBeInTheDocument()
   expect(screen.getByRole('button', { name: 'Salvar conexão em rascunho' })).toBeInTheDocument()

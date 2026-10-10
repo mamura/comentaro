@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Comentaro API
-  version: 0.4.0
+  version: 0.5.0
   description: Contrato HTTP entre a API Laravel e a aplicação web.
   license:
     name: Proprietary
@@ -250,6 +250,45 @@ paths:
         '403': {$ref: '#/components/responses/Forbidden'}
         '404': {$ref: '#/components/responses/NotFound'}
         '422': {$ref: '#/components/responses/ValidationError'}
+  /interactions:
+    get:
+      operationId: listInteractions
+      summary: Lista as interações da organização autenticada
+      tags: [Interactions]
+      security: [{cookieAuth: []}]
+      responses:
+        '200':
+          description: Interações recentes da organização
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: {type: array, items: {$ref: '#/components/schemas/Interaction'}}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/Forbidden'}
+  /interactions/{interaction}:
+    get:
+      operationId: getInteraction
+      summary: Consulta uma interação da organização autenticada
+      tags: [Interactions]
+      security: [{cookieAuth: []}]
+      parameters:
+        - {name: interaction, in: path, required: true, schema: {type: integer}}
+      responses:
+        '200':
+          description: Interação encontrada
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: {$ref: '#/components/schemas/Interaction'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '404': {$ref: '#/components/responses/NotFound'}
 components:
   securitySchemes:
     cookieAuth:
@@ -348,6 +387,20 @@ components:
           type: string
           maxLength: 64
           description: ID do estabelecimento no iFood ou CNPJ; o CNPJ é normalizado para 14 dígitos.
+    Interaction:
+      type: object
+      required: [id, location, provider, external_id, rating, occurred_at, priority, processing_status, reply_status]
+      properties:
+        id: {type: integer}
+        location: {$ref: '#/components/schemas/Location'}
+        provider: {type: string}
+        external_id: {type: string}
+        rating: {type: integer, minimum: 1, maximum: 5}
+        comment: {type: [string, 'null']}
+        occurred_at: {type: string, format: date-time}
+        priority: {type: string, enum: [high, medium, low]}
+        processing_status: {type: string, enum: [received, analyzing, available, processing_failed]}
+        reply_status: {type: string, enum: [not_replied, draft, sending, replied, send_failed, unavailable]}
     RegisterRequest:
       type: object
       required: [name, organization_name, email, password, password_confirmation]

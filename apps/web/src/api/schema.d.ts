@@ -226,6 +226,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/interactions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Lista as interações da organização autenticada */
+        get: operations["listInteractions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/interactions/{interaction}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Consulta uma interação da organização autenticada */
+        get: operations["getInteraction"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -274,6 +308,22 @@ export interface components {
             identifier_type: "merchant_id" | "cnpj";
             /** @description ID do estabelecimento no iFood ou CNPJ; o CNPJ é normalizado para 14 dígitos. */
             identifier: string;
+        };
+        Interaction: {
+            id: number;
+            location: components["schemas"]["Location"];
+            provider: string;
+            external_id: string;
+            rating: number;
+            comment?: string | null;
+            /** Format: date-time */
+            occurred_at: string;
+            /** @enum {string} */
+            priority: "high" | "medium" | "low";
+            /** @enum {string} */
+            processing_status: "received" | "analyzing" | "available" | "processing_failed";
+            /** @enum {string} */
+            reply_status: "not_replied" | "draft" | "sending" | "replied" | "send_failed" | "unavailable";
         };
         RegisterRequest: {
             name: string;
@@ -704,6 +754,57 @@ export interface operations {
             403: components["responses"]["Forbidden"];
             404: components["responses"]["NotFound"];
             422: components["responses"]["ValidationError"];
+        };
+    };
+    listInteractions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Interações recentes da organização */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Interaction"][];
+                    };
+                };
+            };
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+        };
+    };
+    getInteraction: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                interaction: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Interação encontrada */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Interaction"];
+                    };
+                };
+            };
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
         };
     };
 }

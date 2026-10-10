@@ -3,6 +3,7 @@
 use App\Modules\Connections\Http\Controllers\ConnectionController;
 use App\Modules\Identity\Http\Controllers\AuthController;
 use App\Modules\Identity\Http\Controllers\EmailVerificationController;
+use App\Modules\Interactions\Http\Controllers\InteractionController;
 use App\Modules\Locations\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +40,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (): void {
     Route::get('/locations/{location}', [LocationController::class, 'show']);
     Route::get('/locations/{location}/connections', [ConnectionController::class, 'index']);
     Route::post('/locations/{location}/connections/ifood', [ConnectionController::class, 'store']);
+    Route::get('/interactions', [InteractionController::class, 'index']);
+    Route::get('/interactions/{interaction}', [InteractionController::class, 'show']);
 });
