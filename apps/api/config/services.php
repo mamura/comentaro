@@ -14,6 +14,13 @@ return [
     |
     */
 
+    'ifood' => [
+        'client_id' => env('IFOOD_CLIENT_ID'),
+        'client_secret' => env('IFOOD_CLIENT_SECRET'),
+        'authentication_url' => env('IFOOD_AUTHENTICATION_URL', 'https://merchant-api.ifood.com.br/authentication/v1.0'),
+        'merchant_url' => env('IFOOD_MERCHANT_URL', 'https://merchant-api.ifood.com.br/merchant/v1.0'),
+    ],
+
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],

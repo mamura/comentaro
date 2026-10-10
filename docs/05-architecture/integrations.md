@@ -51,7 +51,7 @@ O gerenciador de token deve:
 
 Para aplicação centralizada, o acesso à loja é solicitado no Portal do Desenvolvedor por ID ou CNPJ. O responsável aprova no Portal do Parceiro. Depois, o Comentaro gera novo token e usa a Merchant API para confirmar se a loja aparece entre as autorizadas.
 
-A etapa depende de operação externa e não deve ser representada como OAuth concluído instantaneamente dentro da interface do Comentaro.
+A etapa depende de operação externa e não deve ser representada como OAuth concluído instantaneamente dentro da interface do Comentaro. A documentação oficial não oferece endpoint para aplicações centralizadas criarem essa solicitação: um operador a registra manualmente no Portal do Desenvolvedor e confirma no Comentaro o `merchantId` selecionado. O backend então consulta `GET /merchant/v1.0/merchants/{merchantId}` para verificar a autorização antes da carga inicial.
 
 ## Sincronização
 
@@ -84,7 +84,7 @@ Banco NoSQL não é necessário para esse fluxo no MVP. Banco vetorial não part
 
 ## Fontes oficiais
 
-Verificado em 23 de setembro de 2026:
+Verificado em 10 de outubro de 2026:
 
 - [Criar uma aplicação iFood](https://developer.ifood.com.br/en-US/docs/getting-started/first-steps/create-app)
 - [Autenticação de aplicações centralizadas](https://developer.ifood.com.br/en-US/docs/food/guides/modules/authentication/centralized)
@@ -96,4 +96,4 @@ Verificado em 23 de setembro de 2026:
 ## Pendente
 
 - Classificação detalhada dos erros retornados pelo iFood em transitórios e permanentes.
-- Procedimento operacional exato para transições que dependem do Portal do Desenvolvedor.
+- Automatização do procedimento operacional do Portal do Desenvolvedor, caso o iFood disponibilize uma API para aplicações centralizadas.
