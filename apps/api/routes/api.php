@@ -2,6 +2,7 @@
 
 use App\Modules\Identity\Http\Controllers\AuthController;
 use App\Modules\Identity\Http\Controllers\EmailVerificationController;
+use App\Modules\Locations\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', function () {
@@ -29,4 +30,10 @@ Route::prefix('auth')->group(function (): void {
         Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])
             ->middleware('throttle:3,1');
     });
+});
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function (): void {
+    Route::get('/locations', [LocationController::class, 'index']);
+    Route::post('/locations', [LocationController::class, 'store']);
+    Route::get('/locations/{location}', [LocationController::class, 'show']);
 });

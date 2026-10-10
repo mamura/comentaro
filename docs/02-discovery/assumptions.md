@@ -3,6 +3,7 @@
 | Tema | Decisão ou pendência | Próxima validação |
 | --- | --- | --- |
 | Prioridade | 1–2 estrelas: alta; 3: média; 4–5: baixa. | Avaliar o resultado com dados reais. |
+| Cadastro de unidade | Nesta primeira fatia, uma `Location` exige somente um nome de identificação. | Definir outros dados apenas quando a conexão com o canal ou a operação exigir. |
 | Satisfação | Escala de seis resultados e confiança baixa, média ou alta. | Escolher o método técnico e avaliar exemplos reais. |
 | Alertas | Configuração por estabelecimento: ativa ou silenciada; destinatário é o responsável; entrega por e-mail via Resend. | Avaliar entrega e volume com dados reais. |
 | Resposta | O responsável prepara, edita e envia a resposta. | Detalhar estados e validações do fluxo. |

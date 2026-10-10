@@ -17,3 +17,13 @@ it('blocks the internal journey until the email is verified', async () => {
   render(<QueryClientProvider client={new QueryClient()}><MemoryRouter initialEntries={['/']}><App /></MemoryRouter></QueryClientProvider>)
   expect(await screen.findByRole('heading', { name: 'Confirme seu endereço de e-mail' })).toBeInTheDocument()
 })
+
+
+it('shows locations returned for the authenticated organization', async () => {
+  vi.spyOn(globalThis, 'fetch')
+    .mockResolvedValueOnce(new Response(JSON.stringify({ user: { id: 1, name: 'Ana', email: 'ana@example.com', email_verified: true, organization: { id: 1, name: 'Organização A' } } }), { status: 200, headers: { 'Content-Type': 'application/json' } }))
+    .mockResolvedValueOnce(new Response(JSON.stringify({ data: [{ id: 10, name: 'Unidade Centro' }] }), { status: 200, headers: { 'Content-Type': 'application/json' } }))
+  render(<QueryClientProvider client={new QueryClient()}><MemoryRouter initialEntries={['/']}><App /></MemoryRouter></QueryClientProvider>)
+  expect(await screen.findByText('Unidade Centro')).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: 'Cadastrar estabelecimento' })).toBeInTheDocument()
+})

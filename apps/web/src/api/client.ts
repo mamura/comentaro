@@ -1,6 +1,7 @@
 import type { components } from '@/api/schema'
 
 export type ApiUser = components['schemas']['User']
+export type Location = components['schemas']['Location']
 
 const configuredUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api/v1'
 const apiUrl = configuredUrl.replace(/\/$/, '')
@@ -70,4 +71,9 @@ export const authApi = {
   resendVerification: () => mutate<{ message: string }>('/auth/email/verification-notification'),
   forgotPassword: (email: string) => mutate<{ message: string }>('/auth/forgot-password', { email }),
   resetPassword: (data: Record<string, unknown>) => mutate<{ message: string }>('/auth/reset-password', data),
+}
+
+export const locationApi = {
+  list: () => request<{ data: Location[] }>('/locations'),
+  create: (name: string) => mutate<{ data: Location }>('/locations', { name }),
 }

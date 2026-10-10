@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Comentaro API
-  version: 0.2.0
+  version: 0.3.0
   description: Contrato HTTP entre a API Laravel e a aplicação web.
   license:
     name: Proprietary
@@ -123,6 +123,74 @@ paths:
         '200': {$ref: '#/components/responses/Message'}
         '422': {$ref: '#/components/responses/ValidationError'}
         '429': {$ref: '#/components/responses/TooManyRequests'}
+  /locations:
+    get:
+      operationId: listLocations
+      summary: Lista estabelecimentos da organização autenticada
+      tags: [Locations]
+      security: [{cookieAuth: []}]
+      responses:
+        '200':
+          description: Estabelecimentos da organização
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: array
+                    items: {$ref: '#/components/schemas/Location'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/Forbidden'}
+    post:
+      operationId: createLocation
+      summary: Cadastra um estabelecimento na organização autenticada
+      tags: [Locations]
+      security: [{cookieAuth: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: {type: string, maxLength: 160}
+      responses:
+        '201':
+          description: Estabelecimento criado
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: {$ref: '#/components/schemas/Location'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '422': {$ref: '#/components/responses/ValidationError'}
+  /locations/{location}:
+    get:
+      operationId: getLocation
+      summary: Consulta um estabelecimento da organização autenticada
+      tags: [Locations]
+      security: [{cookieAuth: []}]
+      parameters:
+        - {name: location, in: path, required: true, schema: {type: integer}}
+      responses:
+        '200':
+          description: Estabelecimento encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: {$ref: '#/components/schemas/Location'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '404': {$ref: '#/components/responses/NotFound'}
 components:
   securitySchemes:
     cookieAuth:
@@ -176,7 +244,7 @@ components:
       properties:
         status: {type: string, const: ok}
         service: {type: string, const: comentaro-api}
-        version: {type: string, examples: [0.2.0]}
+        version: {type: string, examples: [0.3.0]}
         timestamp: {type: string, format: date-time}
     Organization:
       type: object
@@ -193,6 +261,12 @@ components:
         email: {type: string, format: email}
         email_verified: {type: boolean}
         organization: {$ref: '#/components/schemas/Organization'}
+    Location:
+      type: object
+      required: [id, name]
+      properties:
+        id: {type: integer}
+        name: {type: string}
     RegisterRequest:
       type: object
       required: [name, organization_name, email, password, password_confirmation]
