@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Connections\Http\Controllers\ConnectionController;
 use App\Modules\Identity\Http\Controllers\AuthController;
 use App\Modules\Identity\Http\Controllers\EmailVerificationController;
 use App\Modules\Locations\Http\Controllers\LocationController;
@@ -36,4 +37,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (): void {
     Route::get('/locations', [LocationController::class, 'index']);
     Route::post('/locations', [LocationController::class, 'store']);
     Route::get('/locations/{location}', [LocationController::class, 'show']);
+    Route::get('/locations/{location}/connections', [ConnectionController::class, 'index']);
+    Route::post('/locations/{location}/connections/ifood', [ConnectionController::class, 'store']);
 });

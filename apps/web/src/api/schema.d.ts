@@ -192,6 +192,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/locations/{location}/connections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Lista as conexões de um estabelecimento da organização autenticada */
+        get: operations["listLocationConnections"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/locations/{location}/connections/ifood": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registra uma solicitação de conexão com o iFood em rascunho */
+        post: operations["requestIFoodConnection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -221,6 +255,25 @@ export interface components {
         Location: {
             id: number;
             name: string;
+        };
+        Integration: {
+            id: number;
+            /** @constant */
+            provider: "ifood";
+            /** @enum {string} */
+            status: "draft" | "access_requested" | "awaiting_approval" | "activating" | "active" | "authorization_revoked" | "connection_failed" | "disconnected";
+            /** @enum {string} */
+            requested_identifier_type: "merchant_id" | "cnpj";
+            requested_identifier: string;
+            merchant_id?: string | null;
+            /** @constant */
+            sync_interval_minutes: 60;
+        };
+        IFoodConnectionRequest: {
+            /** @enum {string} */
+            identifier_type: "merchant_id" | "cnpj";
+            /** @description ID do estabelecimento no iFood ou CNPJ; o CNPJ é normalizado para 14 dígitos. */
+            identifier: string;
         };
         RegisterRequest: {
             name: string;
@@ -581,6 +634,76 @@ export interface operations {
             401: components["responses"]["Unauthenticated"];
             403: components["responses"]["Forbidden"];
             404: components["responses"]["NotFound"];
+        };
+    };
+    listLocationConnections: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                location: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Conexões do estabelecimento */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Integration"][];
+                    };
+                };
+            };
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    requestIFoodConnection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                location: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IFoodConnectionRequest"];
+            };
+        };
+        responses: {
+            /** @description Solicitação idempotente já existente */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Integration"];
+                    };
+                };
+            };
+            /** @description Solicitação criada */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Integration"];
+                    };
+                };
+            };
+            401: components["responses"]["Unauthenticated"];
+            403: components["responses"]["Forbidden"];
+            404: components["responses"]["NotFound"];
+            422: components["responses"]["ValidationError"];
         };
     };
 }

@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Comentaro API
-  version: 0.3.0
+  version: 0.4.0
   description: Contrato HTTP entre a API Laravel e a aplicação web.
   license:
     name: Proprietary
@@ -191,6 +191,65 @@ paths:
         '401': {$ref: '#/components/responses/Unauthenticated'}
         '403': {$ref: '#/components/responses/Forbidden'}
         '404': {$ref: '#/components/responses/NotFound'}
+  /locations/{location}/connections:
+    get:
+      operationId: listLocationConnections
+      summary: Lista as conexões de um estabelecimento da organização autenticada
+      tags: [Connections]
+      security: [{cookieAuth: []}]
+      parameters:
+        - {name: location, in: path, required: true, schema: {type: integer}}
+      responses:
+        '200':
+          description: Conexões do estabelecimento
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: array
+                    items: {$ref: '#/components/schemas/Integration'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /locations/{location}/connections/ifood:
+    post:
+      operationId: requestIFoodConnection
+      summary: Registra uma solicitação de conexão com o iFood em rascunho
+      tags: [Connections]
+      security: [{cookieAuth: []}]
+      parameters:
+        - {name: location, in: path, required: true, schema: {type: integer}}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/IFoodConnectionRequest'}
+      responses:
+        '200':
+          description: Solicitação idempotente já existente
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: {$ref: '#/components/schemas/Integration'}
+        '201':
+          description: Solicitação criada
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data: {$ref: '#/components/schemas/Integration'}
+        '401': {$ref: '#/components/responses/Unauthenticated'}
+        '403': {$ref: '#/components/responses/Forbidden'}
+        '404': {$ref: '#/components/responses/NotFound'}
+        '422': {$ref: '#/components/responses/ValidationError'}
 components:
   securitySchemes:
     cookieAuth:
@@ -267,6 +326,28 @@ components:
       properties:
         id: {type: integer}
         name: {type: string}
+    Integration:
+      type: object
+      required: [id, provider, status, requested_identifier_type, requested_identifier, sync_interval_minutes]
+      properties:
+        id: {type: integer}
+        provider: {type: string, const: ifood}
+        status:
+          type: string
+          enum: [draft, access_requested, awaiting_approval, activating, active, authorization_revoked, connection_failed, disconnected]
+        requested_identifier_type: {type: string, enum: [merchant_id, cnpj]}
+        requested_identifier: {type: string}
+        merchant_id: {type: [string, 'null']}
+        sync_interval_minutes: {type: integer, const: 60}
+    IFoodConnectionRequest:
+      type: object
+      required: [identifier_type, identifier]
+      properties:
+        identifier_type: {type: string, enum: [merchant_id, cnpj]}
+        identifier:
+          type: string
+          maxLength: 64
+          description: ID do estabelecimento no iFood ou CNPJ; o CNPJ é normalizado para 14 dígitos.
     RegisterRequest:
       type: object
       required: [name, organization_name, email, password, password_confirmation]

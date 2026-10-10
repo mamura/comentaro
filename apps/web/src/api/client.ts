@@ -2,6 +2,7 @@ import type { components } from '@/api/schema'
 
 export type ApiUser = components['schemas']['User']
 export type Location = components['schemas']['Location']
+export type Integration = components['schemas']['Integration']
 
 const configuredUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api/v1'
 const apiUrl = configuredUrl.replace(/\/$/, '')
@@ -37,11 +38,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = xsrfToken()
   if (token) headers.set('X-XSRF-TOKEN', token)
 
-  const response = await fetch(`${apiUrl}${path}`, {
-    ...options,
-    credentials: 'include',
-    headers,
-  })
+  const response = await fetch(`${apiUrl}${path}`, { ...options, credentials: 'include', headers })
 
   if (!response.ok) {
     const body = await response.json().catch(() => ({ message: 'Não foi possível concluir a solicitação.' }))
@@ -57,10 +54,7 @@ async function csrf() {
 
 async function mutate<T>(path: string, body?: unknown) {
   await csrf()
-  return request<T>(path, {
-    method: 'POST',
-    body: body === undefined ? undefined : JSON.stringify(body),
-  })
+  return request<T>(path, { method: 'POST', body: body === undefined ? undefined : JSON.stringify(body) })
 }
 
 export const authApi = {
@@ -76,4 +70,10 @@ export const authApi = {
 export const locationApi = {
   list: () => request<{ data: Location[] }>('/locations'),
   create: (name: string) => mutate<{ data: Location }>('/locations', { name }),
+}
+
+export const connectionApi = {
+  list: (locationId: number) => request<{ data: Integration[] }>(`/locations/${locationId}/connections`),
+  requestIFood: (locationId: number, data: { identifier_type: 'merchant_id' | 'cnpj'; identifier: string }) =>
+    mutate<{ data: Integration }>(`/locations/${locationId}/connections/ifood`, data),
 }
